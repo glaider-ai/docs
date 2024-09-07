@@ -1,0 +1,60 @@
+
+Glaider provides seamless integration with popular AI services, automatically anonymizing sensitive data in real-time during conversations, without compromising the quality of AI responses.
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card
+    title="Real-time Anonymization"
+    icon="bolt"
+  >
+    Instantly anonymize sensitive data before it reaches the AI model.
+  </Card>
+  <Card
+    title="AI Service Integration"
+    icon="plug"
+  >
+    Seamlessly works with major AI services like OpenAI and Cohere.
+  </Card>
+</CardGroup>
+
+## Usage Example
+
+Here's how you can use Glaider to ensure conversational privacy with OpenAI's GPT model:
+
+```python
+import glaider
+from glaider import openai
+
+# Initialize Glaider with an API key
+glaider.init(api_key='YOUR_GLAIDER_API_KEY')
+
+# Set the API key for OpenAI
+openai.api_key = "YOUR_OPENAI_API_KEY"
+
+# Create a chat completion with OpenAI's GPT-4, ensuring anonymization
+response = openai.chat_completion_create(
+    model="gpt-4",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant"},
+        {"role": "user", "content": "Hello, my email is lorenzo@glaider.it"}
+    ],
+)
+
+print(response)
+```
+
+## Supported AI Services
+
+Glaider currently supports the following AI services:
+
+- OpenAI
+- Cohere
+
+## Best Practices
+
+1. **Always enable anonymization**: Use Glaider's anonymization features for all AI conversations involving potentially sensitive information.
+2. **Inform users**: Let users know that their conversations are being anonymized for privacy protection.
+3. **Regular audits**: Periodically review anonymized conversations to ensure the effectiveness of the privacy measures.
+4. **Combine with secure storage**: If conversations need to be stored, ensure they are encrypted and access-controlled.
+
