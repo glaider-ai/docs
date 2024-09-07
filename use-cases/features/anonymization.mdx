@@ -1,0 +1,34 @@
+
+## Anonymization
+
+Glaider provides powerful tools to automatically detect and anonymize PII and other sensitive information in your data before it's processed by AI models.
+
+## Usage Example
+
+Here's how you can use Glaider to anonymize PII in a text:
+
+```python
+import glaider
+
+# Initialize Glaider with an API key and anonymization enabled
+glaider.init(api_key='YOUR_API_KEY')
+
+# Text containing PII
+text = "sono Mario e abito a Milano, la mia mail e' lorenzo@glaider.it"
+
+# Anonymize PII in the text
+anonymized_text = glaider.data_processor.anonymize_pii(text).json()
+
+print(anonymized_text)
+```
+
+## Supported PII Types
+
+Glaider can detect and anonymize various types of PII, including but not limited to:
+
+- Names
+- Locations
+- Addresses
+- Email addresses
+- Credit card numbers
+- IP addresses
