@@ -38,14 +38,14 @@
       "url": "https://mintlify.com/docs"
     },
     {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "name": "Support",
+      "icon": "support",
+      "url": "mailto:info@glaider.it"
     },
     {
       "name": "Blog",
       "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "url": "https://www.glaider.it/blog"
     }
   ],
   "navigation": [
