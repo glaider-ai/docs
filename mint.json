@@ -23,7 +23,7 @@
   ],
   "topbarCtaButton": {
     "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "url": "https://hub.glaider.it"
   },
   "tabs": [
     {
@@ -33,18 +33,13 @@
   ],
   "anchors": [
     {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "name": "Contact Sales",
+      "icon": "phone",
+      "url": "https://www.glaider.it/blog"
     },
     {
-      "name": "Support",
-      "icon": "headset",
-      "url": "mailto:info@glaider.it"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
+      "name": "Contact Sales",
+      "icon": "envelope",
       "url": "https://www.glaider.it/blog"
     }
   ],
