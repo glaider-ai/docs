@@ -45,40 +45,35 @@
   ],
   "navigation": [
     {
+      "group": "Playground",
+      "pages": [
+        "playground/api"
+      ]
+    },
+    {
       "group": "Getting started",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
+        "introduction"
       ]
     },
     {
-      "group": "Python",
+      "group": "Use cases",
       "pages": [
-        "essentials/markdown",
         {
-          "group": "Integrations",
+          "group": "Development",
           "pages": [
-            "essentials/code",
-            "essentials/images",
-            "essentials/settings",
-            "essentials/navigation"
+            "use-cases/development/anonymisation",
+            "use-cases/development/prompt-injection-detection",
+            "use-cases/development/conversational-privacy"
+          ]
+        },
+        {
+          "group": "Plugins",
+          "pages": [
+            "use-cases/plugins/browser",
+            "use-cases/plugins/vscode"
           ]
         }
-      ]
-    },
-    {
-      "group": "API Documentation",
-      "pages": [
-        "api-reference/introduction"
-      ]
-    },
-    {
-      "group": "Endpoint Examples",
-      "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
       ]
     }
   ],
