@@ -72,8 +72,8 @@
         {
           "group": "Plugins",
           "pages": [
-            "browser",
-            "vscode"
+            "plugins/browser",
+            "plugins/vscode"
           ]
         }
       ]
