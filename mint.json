@@ -64,9 +64,20 @@
         {
           "group": "Development",
           "pages": [
-            "use-cases/features/anonymization",
-            "use-cases/features/prompt-injection-protection",
-            "use-cases/features/conversational-privacy"
+            {
+              "group": "Python",
+              "pages": [
+                "use-cases/features/anonymization",
+                "use-cases/features/prompt-injection-protection",
+                {
+                  "group": "Conversational Privacy",
+                  "pages": [
+                    "use-cases/features/conversational-privacy/cohere",
+                    "use-cases/features/conversational-privacy/openai"
+                  ]
+                }
+              ]
+            }
           ]
         },
         {
