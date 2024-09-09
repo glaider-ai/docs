@@ -65,8 +65,8 @@
           "group": "Development",
           "pages": [
             "use-cases/features/anonymization",
-            "prompt-injection-detection-and-prevention",
-            "conversational-privacy"
+            "use-cases/features/prompt-injection-protection",
+            "use-cases/features/conversational-privacy"
           ]
         },
         {
