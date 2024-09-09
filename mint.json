@@ -64,7 +64,7 @@
         {
           "group": "Development",
           "pages": [
-            "anonymisation-of-pii-and-sensitive-information",
+            "use-cases/features/anonymization",
             "prompt-injection-detection-and-prevention",
             "conversational-privacy"
           ]
