@@ -47,7 +47,7 @@
     {
       "group": "Playground",
       "pages": [
-        "playground/api"
+        "api"
       ]
     },
     {
@@ -62,16 +62,16 @@
         {
           "group": "Development",
           "pages": [
-            "use-cases/development/anonymisation",
-            "use-cases/development/prompt-injection-detection",
-            "use-cases/development/conversational-privacy"
+            "anonymisation-of-pii-and-sensitive-information",
+            "prompt-injection-detection-and-prevention",
+            "conversational-privacy"
           ]
         },
         {
           "group": "Plugins",
           "pages": [
-            "use-cases/plugins/browser",
-            "use-cases/plugins/vscode"
+            "browser",
+            "vscode"
           ]
         }
       ]
