@@ -1,33 +1,31 @@
----
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
----
 
 <Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
+  All requests to the Glaider API must be authenticated using an API key.
 </Note>
 
-## Welcome
+## Obtaining an API Key
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+To use the Glaider API, you need to obtain an API key.
 
 <Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
+  title="Get Your API Key"
+  icon="key"
+  href="https://dashboard.glaider.com/api-keys"
 >
-  View the OpenAPI specification file
+  Sign up or log in to the Glaider Dashboard to get your API key
 </Card>
 
-## Authentication
+## Using Your API Key
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+Once you have your API key, you need to include it in the header of all API requests.
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+### API Key Header
+
+Add the following header to your HTTP requests:
+
 ```
+Authorization: Bearer YOUR_API_KEY
+```
+
+Replace `YOUR_API_KEY` with your actual Glaider API key.
+

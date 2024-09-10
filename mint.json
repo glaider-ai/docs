@@ -91,7 +91,7 @@
       "group": "Endpoint Examples",
       "pages": [
         "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
+        "api-reference/endpoint/anonymize-pii",
         "api-reference/endpoint/delete"
       ]
     }
