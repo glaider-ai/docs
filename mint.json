@@ -92,7 +92,7 @@
       "pages": [
         "api-reference/endpoint/get",
         "api-reference/endpoint/anonymize-pii",
-        "api-reference/endpoint/delete"
+        "api-reference/endpoint/detect-prompt-injection"
       ]
     }
   ],
