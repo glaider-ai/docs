@@ -53,6 +53,7 @@
             {
               "group": "Python",
               "pages": [
+                "use-cases/installation",
                 "use-cases/features/anonymization",
                 "use-cases/features/prompt-injection-protection",
                 {
