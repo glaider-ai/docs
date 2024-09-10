@@ -39,12 +39,6 @@
   ],
   "navigation": [
     {
-      "group": "Playground",
-      "pages": [
-        "api-reference/introduction"
-      ]
-    },
-    {
       "group": "Getting started",
       "pages": [
         "introduction"
