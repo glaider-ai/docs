@@ -78,14 +78,14 @@
     {
       "group": "API Documentation",
       "pages": [
-        "api-reference/introduction"
-      ]
-    },
-    {
-      "group": "Endpoint Examples",
-      "pages": [
-        "api-reference/endpoint/anonymize-pii",
-        "api-reference/endpoint/detect-prompt-injection"
+        "api-reference/introduction",
+        {
+          "group": "Endpoint Examples",
+          "pages": [
+            "api-reference/endpoint/anonymize-pii",
+            "api-reference/endpoint/detect-prompt-injection"
+          ]
+        }
       ]
     }
   ],
