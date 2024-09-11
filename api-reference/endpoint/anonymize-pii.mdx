@@ -1,3 +1,4 @@
+# PII Anonymization API
 
 <Note>
   This endpoint allows you to anonymize personally identifiable information (PII) in text data before processing it with AI models or storing it.
@@ -128,4 +129,154 @@ POST https://api.glaider.com/v1/anonymize-pii
   View the full list of supported PII types
 </Card>
 
-This API documentation for the anonymize-pii endpoint provides a comprehensive overview of how to use the endpoint, including the request format, available options, response structure, and possible error scenarios. It's language-agnostic and focuses on the API itself rather than specific code implementations.
+## Code Examples
+
+import { useState } from 'react';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+
+export const CodeExamples = () => {
+  const [language, setLanguage] = useState('python');
+
+  const examples = {
+    python: `
+import requests
+
+url = "https://api.glaider.com/v1/anonymize-pii"
+headers = {
+    "Authorization": "Bearer YOUR_API_KEY",
+    "Content-Type": "application/json"
+}
+data = {
+    "text": "My name is John Doe and my email is john.doe@example.com. Call me at 555-123-4567.",
+    "options": {
+        "mask_phone": False,
+        "custom_entities": ["EMPLOYEE_ID"]
+    }
+}
+
+response = requests.post(url, json=data, headers=headers)
+print(response.json())
+    `,
+    javascript: `
+const fetch = require('node-fetch');
+
+const url = 'https://api.glaider.com/v1/anonymize-pii';
+const headers = {
+    'Authorization': 'Bearer YOUR_API_KEY',
+    'Content-Type': 'application/json'
+};
+const body = JSON.stringify({
+    text: 'My name is John Doe and my email is john.doe@example.com. Call me at 555-123-4567.',
+    options: {
+        mask_phone: false,
+        custom_entities: ['EMPLOYEE_ID']
+    }
+});
+
+fetch(url, { method: 'POST', headers: headers, body: body })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+    `,
+    ruby: `
+require 'net/http'
+require 'json'
+
+uri = URI('https://api.glaider.com/v1/anonymize-pii')
+headers = {
+  'Authorization' => 'Bearer YOUR_API_KEY',
+  'Content-Type' => 'application/json'
+}
+data = {
+  text: 'My name is John Doe and my email is john.doe@example.com. Call me at 555-123-4567.',
+  options: {
+    mask_phone: false,
+    custom_entities: ['EMPLOYEE_ID']
+  }
+}
+
+response = Net::HTTP.post(uri, data.to_json, headers)
+puts response.body
+    `,
+    go: `
+package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "net/http"
+)
+
+func main() {
+    url := "https://api.glaider.com/v1/anonymize-pii"
+    data := map[string]interface{}{
+        "text": "My name is John Doe and my email is john.doe@example.com. Call me at 555-123-4567.",
+        "options": map[string]interface{}{
+            "mask_phone": false,
+            "custom_entities": []string{"EMPLOYEE_ID"},
+        },
+    }
+    jsonData, _ := json.Marshal(data)
+
+    req, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    req.Header.Set("Authorization", "Bearer YOUR_API_KEY")
+    req.Header.Set("Content-Type", "application/json")
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        panic(err)
+    }
+    defer resp.Body.Close()
+
+    fmt.Println("Response Status:", resp.Status)
+    // Read and print response body here
+}
+    `,
+    java: `
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        String url = "https://api.glaider.com/v1/anonymize-pii";
+        String jsonBody = "{\"text\":\"My name is John Doe and my email is john.doe@example.com. Call me at 555-123-4567.\",\"options\":{\"mask_phone\":false,\"custom_entities\":[\"EMPLOYEE_ID\"]}}";
+
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create(url))
+            .header("Authorization", "Bearer YOUR_API_KEY")
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+            .build();
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        System.out.println("Status code: " + response.statusCode());
+        System.out.println("Response body: " + response.body());
+    }
+}
+    `
+  };
+
+  return (
+    <Tabs selectedIndex={Object.keys(examples).indexOf(language)} onSelect={index => setLanguage(Object.keys(examples)[index])}>
+      <TabList>
+        {Object.keys(examples).map(lang => (
+          <Tab key={lang}>{lang.charAt(0).toUpperCase() + lang.slice(1)}</Tab>
+        ))}
+      </TabList>
+
+      {Object.entries(examples).map(([lang, code]) => (
+        <TabPanel key={lang}>
+          <pre><code className={`language-${lang}`}>{code}</code></pre>
+        </TabPanel>
+      ))}
+    </Tabs>
+  );
+};
+
+<CodeExamples />
