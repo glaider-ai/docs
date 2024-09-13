@@ -1,8 +1,6 @@
-# PII Anonymization API
 
-<Note>
-  This endpoint allows you to anonymize personally identifiable information (PII) in text data before processing it with AI models or storing it.
-</Note>
+> **Note:**  
+> This endpoint allows you to anonymize personally identifiable information (PII) in text data before processing it with AI models or storing it.
 
 ## Endpoint
 
@@ -12,27 +10,27 @@ POST https://api.glaider.com/v1/anonymize-pii
 
 ## Headers
 
-| Header          | Value                  |
-|-----------------|------------------------|
-| Authorization   | Bearer YOUR_API_KEY    |
-| Content-Type    | application/json       |
+| Header        | Value               |
+|---------------|---------------------|
+| Authorization | Bearer YOUR_API_KEY |
+| Content-Type  | application/json    |
 
 ## Request Body
 
-| Parameter | Type   | Required | Description                                     |
-|-----------|--------|----------|-------------------------------------------------|
-| text      | string | Yes      | The input text to be anonymized                 |
-| options   | object | No       | Additional options for customizing anonymization|
+| Parameter | Type   | Required | Description                                      |
+|-----------|--------|----------|--------------------------------------------------|
+| text      | string | Yes      | The input text to be anonymized                  |
+| options   | object | No       | Additional options for customizing anonymization |
 
 ### Options Object
 
-| Parameter     | Type    | Default | Description                                        |
-|---------------|---------|---------|---------------------------------------------------|
-| mask_emails   | boolean | true    | Whether to mask email addresses                    |
-| mask_names    | boolean | true    | Whether to mask personal names                     |
-| mask_phone    | boolean | true    | Whether to mask phone numbers                      |
-| mask_addresses| boolean | true    | Whether to mask physical addresses                 |
-| custom_entities| array  | []      | List of custom entities to mask (e.g., ["CUSTOM_ID"])|
+| Parameter       | Type    | Default | Description                                              |
+|-----------------|---------|---------|----------------------------------------------------------|
+| mask_emails     | boolean | true    | Whether to mask email addresses                          |
+| mask_names      | boolean | true    | Whether to mask personal names                           |
+| mask_phone      | boolean | true    | Whether to mask phone numbers                            |
+| mask_addresses  | boolean | true    | Whether to mask physical addresses                       |
+| custom_entities | array   | []      | List of custom entities to mask (e.g., `["CUSTOM_ID"]`)  |
 
 ## Example Request
 
@@ -48,13 +46,13 @@ POST https://api.glaider.com/v1/anonymize-pii
 
 ## Response
 
-| Status Code | Description           |
-|-------------|-----------------------|
-| 200         | Successful response   |
-| 400         | Bad request           |
-| 401         | Unauthorized          |
-| 429         | Too many requests     |
-| 500         | Internal server error |
+| Status Code | Description            |
+|-------------|------------------------|
+| 200         | Successful response    |
+| 400         | Bad request            |
+| 401         | Unauthorized           |
+| 429         | Too many requests      |
+| 500         | Internal server error  |
 
 ### Success Response Body
 
@@ -123,14 +121,9 @@ POST https://api.glaider.com/v1/anonymize-pii
 
 ## Code Examples
 
-import { useState } from 'react';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+### Python
 
-export const CodeExamples = () => {
-  const [language, setLanguage] = useState('python');
-
-  const examples = {
-    python: `
+```python
 import requests
 
 url = "https://api.glaider.com/v1/anonymize-pii"
@@ -148,8 +141,11 @@ data = {
 
 response = requests.post(url, json=data, headers=headers)
 print(response.json())
-    `,
-    javascript: `
+```
+
+### JavaScript
+
+```javascript
 const fetch = require('node-fetch');
 
 const url = 'https://api.glaider.com/v1/anonymize-pii';
@@ -169,8 +165,11 @@ fetch(url, { method: 'POST', headers: headers, body: body })
     .then(response => response.json())
     .then(data => console.log(data))
     .catch(error => console.error('Error:', error));
-    `,
-    ruby: `
+```
+
+### Ruby
+
+```ruby
 require 'net/http'
 require 'json'
 
@@ -189,8 +188,11 @@ data = {
 
 response = Net::HTTP.post(uri, data.to_json, headers)
 puts response.body
-    `,
-    go: `
+```
+
+### Go
+
+```go
 package main
 
 import (
@@ -225,8 +227,11 @@ func main() {
     fmt.Println("Response Status:", resp.Status)
     // Read and print response body here
 }
-    `,
-    java: `
+```
+
+### Java
+
+```java
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -251,24 +256,4 @@ public class Main {
         System.out.println("Response body: " + response.body());
     }
 }
-    `
-  };
-
-  return (
-    <Tabs selectedIndex={Object.keys(examples).indexOf(language)} onSelect={index => setLanguage(Object.keys(examples)[index])}>
-      <TabList>
-        {Object.keys(examples).map(lang => (
-          <Tab key={lang}>{lang.charAt(0).toUpperCase() + lang.slice(1)}</Tab>
-        ))}
-      </TabList>
-
-      {Object.entries(examples).map(([lang, code]) => (
-        <TabPanel key={lang}>
-          <pre><code className={`language-${lang}`}>{code}</code></pre>
-        </TabPanel>
-      ))}
-    </Tabs>
-  );
-};
-
-<CodeExamples />
+```
