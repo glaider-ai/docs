@@ -45,7 +45,7 @@ POST https://api.glaider.com/v1/detect-prompt-injection
 
 ```json
 {
-  "is_prompt_injection": true,
+  "is_prompt_injection": {'label': 'SAFE', score: '0.98'}},
   "status": "success"
 }
 ```
