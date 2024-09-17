@@ -81,7 +81,6 @@ POST https://api.glaider.com/v1/detect-prompt-injection
 | result.label        | string  | The classification label of the prompt ("INJECTION" or "SAFE") |
 | result.score        | number  | Confidence score of the classification (0 to 1)                |
 | is_prompt_injection | boolean | Indicates whether prompt injection was detected                |
-| message             | string  | Additional information about the request (asynchronous only)   |
 
 **Note:** When using `zero_latency: true`, the API will return immediately with a 202 status code. The prompt injection detection will be processed asynchronously, and the result will be communicated directly to the Glaider dashboard. You won't receive the detection result in the API response.
 
