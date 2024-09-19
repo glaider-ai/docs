@@ -207,7 +207,7 @@ def get_analysis_result(analysis_id):
 
 # Example usage
 analysis_id = "unique_analysis_id"  # Replace with actual analysis ID
-time.sleep(3)  # Wait for processing
+# we suggest waiting at least 500ms from requesting the prompt injection detection to retrieving the analysis result, to ensure it's processed
 result = get_analysis_result(analysis_id)
 print("Analysis Result:", result)
 ```
