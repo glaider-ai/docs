@@ -84,8 +84,7 @@
           "group": "Endpoint Examples",
           "pages": [
             "api-reference/endpoint/anonymize-pii",
-            "api-reference/endpoint/detect-prompt-injection-v1",
-            "api-reference/endpoint/detect-prompt-injection-v2"
+            "api-reference/endpoint/detect-prompt-injection"
           ]
         }
       ]
