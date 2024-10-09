@@ -81,10 +81,11 @@
       "pages": [
         "api-reference/introduction",
         {
-          "group": "Endpoint Examples",
+          "group": "Features",
           "pages": [
-            "api-reference/endpoint/anonymize-pii",
-            "api-reference/endpoint/detect-prompt-injection"
+            "api-reference/features/anonymize-pii",
+            "api-reference/features/detect-attack",
+            "api-reference/features/detect-indirect-attack"
           ]
         }
       ]
