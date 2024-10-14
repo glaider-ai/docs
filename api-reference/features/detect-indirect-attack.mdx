@@ -4,7 +4,7 @@ Glaider identify potential indirect prompt injection attacks that could manipula
 ## Endpoint
 
 ```
-POST https://api.glaider.com/v1/detect-indirect-attack
+POST https://api.glaider.it/v1/detect-indirect-attack
 ```
 
 ## Headers
@@ -131,7 +131,7 @@ Suppose you receive text data from external sources, such as user-uploaded docum
 ```python
 import requests
 
-API_URL = "https://api.glaider.com/v1/detect-indirect-attack"
+API_URL = "https://api.glaider.it/v1/detect-indirect-attack"
 API_KEY = "YOUR_API_KEY"
 
 headers = {
@@ -199,7 +199,7 @@ If you set `zero_latency` to `true`, the analysis will be processed asynchronous
 
 ```python
 def get_analysis_result(analysis_id):
-    result_url = "https://api.glaider.com/v1/analysis-result"
+    result_url = "https://api.glaider.it/v1/analysis-result"
     data = {"analysis_id": analysis_id}
     response = requests.post(result_url, json=data, headers=headers)
     response.raise_for_status()

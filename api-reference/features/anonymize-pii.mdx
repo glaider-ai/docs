@@ -4,7 +4,7 @@ Glaider allows you to anonymize personally identifiable information (PII) in tex
 ## Endpoint
 
 ```
-POST https://api.glaider.com/v1/anonymize-pii
+POST https://api.glaider.it/v1/anonymize-pii
 ```
 
 ## Headers
@@ -125,7 +125,7 @@ POST https://api.glaider.com/v1/anonymize-pii
 ```python
 import requests
 
-url = "https://api.glaider.com/v1/anonymize-pii"
+url = "https://api.glaider.it/v1/anonymize-pii"
 headers = {
     "Authorization": "Bearer YOUR_API_KEY",
     "Content-Type": "application/json"
@@ -147,7 +147,7 @@ print(response.json())
 ```javascript
 const fetch = require('node-fetch');
 
-const url = 'https://api.glaider.com/v1/anonymize-pii';
+const url = 'https://api.glaider.it/v1/anonymize-pii';
 const headers = {
     'Authorization': 'Bearer YOUR_API_KEY',
     'Content-Type': 'application/json'
@@ -172,7 +172,7 @@ fetch(url, { method: 'POST', headers: headers, body: body })
 require 'net/http'
 require 'json'
 
-uri = URI('https://api.glaider.com/v1/anonymize-pii')
+uri = URI('https://api.glaider.it/v1/anonymize-pii')
 headers = {
   'Authorization' => 'Bearer YOUR_API_KEY',
   'Content-Type' => 'application/json'
@@ -202,7 +202,7 @@ import (
 )
 
 func main() {
-    url := "https://api.glaider.com/v1/anonymize-pii"
+    url := "https://api.glaider.it/v1/anonymize-pii"
     data := map[string]interface{}{
         "text": "My name is John Doe and my email is john.doe@example.com. Call me at 555-123-4567.",
         "options": map[string]interface{}{
@@ -238,7 +238,7 @@ import java.net.http.HttpResponse;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        String url = "https://api.glaider.com/v1/anonymize-pii";
+        String url = "https://api.glaider.it/v1/anonymize-pii";
         String jsonBody = "{\"text\":\"My name is John Doe and my email is john.doe@example.com. Call me at 555-123-4567.\",\"options\":{\"mask_phone\":false,\"custom_entities\":[\"EMPLOYEE_ID\"]}}";
 
         HttpRequest request = HttpRequest.newBuilder()
