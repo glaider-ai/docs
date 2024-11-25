@@ -28,7 +28,7 @@ POST https://api.glaider.it/v1/anonymize-pii
 
 ```json
 {
-  "prompt": "i am Lorenzo and I live on the Moon"
+  "prompt": "Hi, I'm Lorenzo Smith working at Google. You can reach me at lorenzo.smith@gmail.com or visit our office at 1600 Amphitheatre Parkway, Mountain View. My API key is sk_test_4eC39HqLyjWDarja4fqee2d23dtT1zdp7dc and my credit card is 4532-7153-3790-4421. Our server IP is 192.168.1.1"
 }
 ```
 
@@ -46,9 +46,16 @@ POST https://api.glaider.it/v1/anonymize-pii
 
 ```json
 {
-  "anonymized_text": "i am [PER_0] and I live on the Moon",
+  "anonymized_text": "Hi, I'm [PER_0] working at [ORG_0]. You can reach me at [Email Address_0] or visit our office at 1600 [LOC_0], [LOC_1]. My API key is [Access Token_0] and my credit card is [Credit Card Number_0]. Our server IP is [IPv4 Address_0]",
   "entities": {
-    "[PER_0]": "Lorenzo"
+    "[LOC_0]": "Amphitheatre Parkway",
+    "[PER_0]": "Lorenzo Smith",
+    "[LOC_1]": "Mountain View",
+    "[ORG_0]": "Google",
+    "[Email Address_0]": "lorenzo.smith@gmail.com",
+    "[IPv4 Address_0]": "192.168.1.1",
+    "[Credit Card Number_0]": "4532-7153-3790-4421",
+    "[Access Token_0]": "sk_test_4eC39HqLyjWDarja4fqee2d23dtT1zdp7dc"
   }
 }
 ```
@@ -83,7 +90,7 @@ headers = {
 }
 
 data = {
-    "prompt": "i am Lorenzo and I live on the Moon"
+    "prompt": "Hi, I'm Lorenzo Smith working at Google. You can reach me at lorenzo.smith@gmail.com or visit our office at 1600 Amphitheatre Parkway, Mountain View. My API key is sk_test_4eC39HqLyjWDarjtT1zdp7dc and my credit card is 4532-7153-3790-4421. Our server IP is 192.168.1.1"
 }
 
 response = requests.post(url, json=data, headers=headers)
@@ -101,7 +108,7 @@ const headers = {
     'Content-Type': 'application/json'
 };
 const body = JSON.stringify({
-    prompt: 'i am Lorenzo and I live on the Moon'
+    prompt: 'Hi, I'm Lorenzo Smith working at Google. You can reach me at lorenzo.smith@gmail.com or visit our office at 1600 Amphitheatre Parkway, Mountain View. My API key is sk_test_4eC39HqLyjWDarjtT1zdp7dc and my credit card is 4532-7153-3790-4421. Our server IP is 192.168.1.1'
 });
 
 fetch(url, { method: 'POST', headers: headers, body: body })
@@ -122,7 +129,7 @@ headers = {
   'Content-Type' => 'application/json'
 }
 data = {
-  prompt: 'i am Lorenzo and I live on the Moon'
+  prompt: 'Hi, I'm Lorenzo Smith working at Google. You can reach me at lorenzo.smith@gmail.com or visit our office at 1600 Amphitheatre Parkway, Mountain View. My API key is sk_test_4eC39HqLyjWDarjtT1zdp7dc and my credit card is 4532-7153-3790-4421. Our server IP is 192.168.1.1'
 }
 
 response = Net::HTTP.post(uri, data.to_json, headers)
@@ -144,7 +151,7 @@ import (
 func main() {
     url := "https://api.glaider.it/v1/anonymize-pii"
     data := map[string]interface{}{
-        "prompt": "i am Lorenzo and I live on the Moon"
+        "prompt": "Hi, I'm Lorenzo Smith working at Google. You can reach me at lorenzo.smith@gmail.com or visit our office at 1600 Amphitheatre Parkway, Mountain View. My API key is sk_test_4eC39HqLyjWDarjtT1zdp7dc and my credit card is 4532-7153-3790-4421. Our server IP is 192.168.1.1"
     }
     jsonData, _ := json.Marshal(data)
 
@@ -175,7 +182,7 @@ import java.net.http.HttpResponse;
 public class Main {
     public static void main(String[] args) throws Exception {
         String url = "https://api.glaider.it/v1/anonymize-pii";
-        String jsonBody = "{\"prompt\":\"i am Lorenzo and I live on the Moon\"}";
+        String jsonBody = "{\"prompt\":\"Hi, I'm Lorenzo Smith working at Google. You can reach me at lorenzo.smith@gmail.com or visit our office at 1600 Amphitheatre Parkway, Mountain View. My API key is sk_test_4eC39HqLyjWDarjtT1zdp7dc and my credit card is 4532-7153-3790-4421. Our server IP is 192.168.1.1\"}";
 
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(url))
