@@ -20,30 +20,15 @@ POST https://api.glaider.it/v1/anonymize-pii
 
 ## Request Body
 
-| Parameter | Type   | Required | Description                                      |
-|-----------|--------|----------|--------------------------------------------------|
-| text      | string | Yes      | The input text to be anonymized                  |
-| options   | object | No       | Additional options for customizing anonymization |
-
-### Options Object
-
-| Parameter       | Type    | Default | Description                                              |
-|-----------------|---------|---------|----------------------------------------------------------|
-| mask_emails     | boolean | true    | Whether to mask email addresses                          |
-| mask_names      | boolean | true    | Whether to mask personal names                           |
-| mask_phone      | boolean | true    | Whether to mask phone numbers                            |
-| mask_addresses  | boolean | true    | Whether to mask physical addresses                       |
-| custom_entities | array   | []      | List of custom entities to mask (e.g., `["CUSTOM_ID"]`)  |
+| Parameter | Type   | Required | Description                |
+|-----------|--------|----------|----------------------------|
+| prompt    | string | Yes      | The input text to anonymize|
 
 ## Example Request
 
 ```json
 {
-  "text": "My name is John Doe and my email is john.doe@example.com. Call me at 555-123-4567.",
-  "options": {
-    "mask_phone": false,
-    "custom_entities": ["EMPLOYEE_ID"]
-  }
+  "prompt": "i am Lorenzo and I live on the Moon"
 }
 ```
 
@@ -61,66 +46,26 @@ POST https://api.glaider.it/v1/anonymize-pii
 
 ```json
 {
-  "anonymized_text": "My name is [NAME] and my email is [EMAIL]. Call me at 555-123-4567.",
-  "entities": [
-    {
-      "type": "NAME",
-      "start": 11,
-      "end": 19,
-      "original": "John Doe"
-    },
-    {
-      "type": "EMAIL",
-      "start": 34,
-      "end": 54,
-      "original": "john.doe@example.com"
-    }
-  ],
-  "stats": {
-    "total_entities": 2,
-    "types": {
-      "NAME": 1,
-      "EMAIL": 1
-    }
+  "anonymized_text": "i am [PER_0] and I live on the Moon",
+  "entities": {
+    "[PER_0]": "Lorenzo"
   }
 }
 ```
 
-## Error Responses
+## Supported Entity Types
 
-### 400 Bad Request
+The API automatically detects and anonymizes the following types of sensitive information:
 
-```json
-{
-  "error": "Invalid input",
-  "message": "The 'text' field is required."
-}
-```
-
-### 401 Unauthorized
-
-```json
-{
-  "error": "Unauthorized",
-  "message": "Invalid API key provided."
-}
-```
-
-### 429 Too Many Requests
-
-```json
-{
-  "error": "Rate limit exceeded",
-  "message": "You have exceeded the rate limit. Please try again later."
-}
-```
-
-## Notes
-
-- The API will attempt to identify and anonymize common PII types such as names, email addresses, phone numbers, and physical addresses.
-- You can customize the anonymization process using the `options` parameter in the request body.
-- The response includes the anonymized text, details about the entities that were anonymized, and statistics about the anonymization process.
-- Custom entities can be specified in the `options.custom_entities` array to mask specific patterns or identifiers unique to your use case.
+- Personal names
+- Location names
+- Organization names
+- Email addresses
+- Private keys
+- IP addresses
+- Access tokens
+- API keys
+- Credit card numbers
 
 ## Code Examples
 
@@ -130,16 +75,15 @@ POST https://api.glaider.it/v1/anonymize-pii
 import requests
 
 url = "https://api.glaider.it/v1/anonymize-pii"
+api_key = "YOUR_API_KEY"
+
 headers = {
-    "Authorization": "Bearer YOUR_API_KEY",
+    "Authorization": f"Bearer {api_key}",
     "Content-Type": "application/json"
 }
+
 data = {
-    "text": "My name is John Doe and my email is john.doe@example.com. Call me at 555-123-4567.",
-    "options": {
-        "mask_phone": False,
-        "custom_entities": ["EMPLOYEE_ID"]
-    }
+    "prompt": "i am Lorenzo and I live on the Moon"
 }
 
 response = requests.post(url, json=data, headers=headers)
@@ -157,11 +101,7 @@ const headers = {
     'Content-Type': 'application/json'
 };
 const body = JSON.stringify({
-    text: 'My name is John Doe and my email is john.doe@example.com. Call me at 555-123-4567.',
-    options: {
-        mask_phone: false,
-        custom_entities: ['EMPLOYEE_ID']
-    }
+    prompt: 'i am Lorenzo and I live on the Moon'
 });
 
 fetch(url, { method: 'POST', headers: headers, body: body })
@@ -182,11 +122,7 @@ headers = {
   'Content-Type' => 'application/json'
 }
 data = {
-  text: 'My name is John Doe and my email is john.doe@example.com. Call me at 555-123-4567.',
-  options: {
-    mask_phone: false,
-    custom_entities: ['EMPLOYEE_ID']
-  }
+  prompt: 'i am Lorenzo and I live on the Moon'
 }
 
 response = Net::HTTP.post(uri, data.to_json, headers)
@@ -208,11 +144,7 @@ import (
 func main() {
     url := "https://api.glaider.it/v1/anonymize-pii"
     data := map[string]interface{}{
-        "text": "My name is John Doe and my email is john.doe@example.com. Call me at 555-123-4567.",
-        "options": map[string]interface{}{
-            "mask_phone": false,
-            "custom_entities": []string{"EMPLOYEE_ID"},
-        },
+        "prompt": "i am Lorenzo and I live on the Moon"
     }
     jsonData, _ := json.Marshal(data)
 
@@ -243,7 +175,7 @@ import java.net.http.HttpResponse;
 public class Main {
     public static void main(String[] args) throws Exception {
         String url = "https://api.glaider.it/v1/anonymize-pii";
-        String jsonBody = "{\"text\":\"My name is John Doe and my email is john.doe@example.com. Call me at 555-123-4567.\",\"options\":{\"mask_phone\":false,\"custom_entities\":[\"EMPLOYEE_ID\"]}}";
+        String jsonBody = "{\"prompt\":\"i am Lorenzo and I live on the Moon\"}";
 
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(url))
