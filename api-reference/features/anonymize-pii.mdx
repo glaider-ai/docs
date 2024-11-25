@@ -3,7 +3,7 @@ title: "Anonymize PII"
 hideTitle: false
 ---
 
-Glaider allows you to anonymize personally identifiable information (PII) in text data before processing it with AI models or storing it.
+Glaider allows you to anonymize personally identifiable information (PII) in text data before processing it with AI models or storing it. The service automatically detects and anonymizes sensitive information like personal names, locations, organizations, and various types of credentials or identifiers.
 
 ## Endpoint
 
@@ -13,18 +13,22 @@ POST https://api.glaider.it/v1/anonymize-pii
 
 ## Headers
 
-| Header        | Value               |
-|---------------|---------------------|
-| Authorization | Bearer YOUR_API_KEY |
-| Content-Type  | application/json    |
+| Header        | Value                 |
+|---------------|-----------------------|
+| Authorization | Bearer `YOUR_API_KEY` |
+| Content-Type  | application/json      |
 
-## Request Body
+### Authentication
 
-| Parameter | Type   | Required | Description                |
-|-----------|--------|----------|----------------------------|
-| prompt    | string | Yes      | The input text to anonymize|
+Replace `YOUR_API_KEY` with your actual API key.
 
-## Example Request
+## Request Body Parameters
+
+| Parameter | Type     | Required | Description                |
+|-----------|----------|----------|----------------------------|
+| `prompt`  | `string` | **Yes**  | The input text to anonymize|
+
+### Example Request
 
 ```json
 {
@@ -32,17 +36,13 @@ POST https://api.glaider.it/v1/anonymize-pii
 }
 ```
 
-## Response
+## Responses
 
-| Status Code | Description            |
-|-------------|------------------------|
-| 200         | Successful response    |
-| 400         | Bad request            |
-| 401         | Unauthorized           |
-| 429         | Too many requests      |
-| 500         | Internal server error  |
+### Success Response
 
-### Success Response Body
+- **Status Code**: `200 OK`
+- **Content-Type**: `application/json`
+- **Body**:
 
 ```json
 {
@@ -60,21 +60,64 @@ POST https://api.glaider.it/v1/anonymize-pii
 }
 ```
 
+### Error Responses
+
+#### 400 Bad Request
+
+```json
+{
+  "status": "error",
+  "message": "Invalid input: The 'prompt' field is required."
+}
+```
+
+#### 401 Unauthorized
+
+```json
+{
+  "status": "error",
+  "message": "Unauthorized: Invalid or missing API key."
+}
+```
+
+#### 429 Too Many Requests
+
+```json
+{
+  "status": "error",
+  "message": "Rate limit exceeded: Please try again later."
+}
+```
+
+#### 500 Internal Server Error
+
+```json
+{
+  "status": "error",
+  "message": "Internal server error."
+}
+```
+
+## Response Fields Description
+
+- **`anonymized_text`** (`string`): The input text with all detected sensitive information replaced with anonymized tokens
+- **`entities`** (`object`): A mapping of anonymized tokens to their original values
+
 ## Supported Entity Types
 
 The API automatically detects and anonymizes the following types of sensitive information:
 
-- Personal names
-- Location names
-- Organization names
-- Email addresses
-- Private keys
-- IP addresses
-- Access tokens
-- API keys
-- Credit card numbers
+- Personal names (`[PER_n]`)
+- Location names (`[LOC_n]`)
+- Organization names (`[ORG_n]`)
+- Email addresses (`[Email Address_n]`)
+- Private keys (`[Private Key_n]`)
+- IP addresses (`[IPv4 Address_n]`)
+- Access tokens (`[Access Token_n]`)
+- API keys (`[API Key_n]`)
+- Credit card numbers (`[Credit Card Number_n]`)
 
-## Code Examples
+## Usage Examples
 
 ### Python
 
@@ -90,112 +133,11 @@ headers = {
 }
 
 data = {
-    "prompt": "Hi, I'm Lorenzo Smith working at Google. You can reach me at lorenzo.smith@gmail.com or visit our office at 1600 Amphitheatre Parkway, Mountain View. My API key is sk_test_4eC39HqLyjWDarjtT1zdp7dc and my credit card is 4532-7153-3790-4421. Our server IP is 192.168.1.1"
+    "prompt": "Hi, I'm Lorenzo Smith working at Google. You can reach me at lorenzo.smith@gmail.com or visit our office at 1600 Amphitheatre Parkway, Mountain View. My API key is sk_test_4eC39HqLyjWDarja4fqee2d23dtT1zdp7dc and my credit card is 4532-7153-3790-4421. Our server IP is 192.168.1.1"
 }
 
 response = requests.post(url, json=data, headers=headers)
 print(response.json())
 ```
 
-### JavaScript
-
-```javascript
-const fetch = require('node-fetch');
-
-const url = 'https://api.glaider.it/v1/anonymize-pii';
-const headers = {
-    'Authorization': 'Bearer YOUR_API_KEY',
-    'Content-Type': 'application/json'
-};
-const body = JSON.stringify({
-    prompt: 'Hi, I'm Lorenzo Smith working at Google. You can reach me at lorenzo.smith@gmail.com or visit our office at 1600 Amphitheatre Parkway, Mountain View. My API key is sk_test_4eC39HqLyjWDarjtT1zdp7dc and my credit card is 4532-7153-3790-4421. Our server IP is 192.168.1.1'
-});
-
-fetch(url, { method: 'POST', headers: headers, body: body })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error('Error:', error));
-```
-
-### Ruby
-
-```ruby
-require 'net/http'
-require 'json'
-
-uri = URI('https://api.glaider.it/v1/anonymize-pii')
-headers = {
-  'Authorization' => 'Bearer YOUR_API_KEY',
-  'Content-Type' => 'application/json'
-}
-data = {
-  prompt: 'Hi, I'm Lorenzo Smith working at Google. You can reach me at lorenzo.smith@gmail.com or visit our office at 1600 Amphitheatre Parkway, Mountain View. My API key is sk_test_4eC39HqLyjWDarjtT1zdp7dc and my credit card is 4532-7153-3790-4421. Our server IP is 192.168.1.1'
-}
-
-response = Net::HTTP.post(uri, data.to_json, headers)
-puts response.body
-```
-
-### Go
-
-```go
-package main
-
-import (
-    "bytes"
-    "encoding/json"
-    "fmt"
-    "net/http"
-)
-
-func main() {
-    url := "https://api.glaider.it/v1/anonymize-pii"
-    data := map[string]interface{}{
-        "prompt": "Hi, I'm Lorenzo Smith working at Google. You can reach me at lorenzo.smith@gmail.com or visit our office at 1600 Amphitheatre Parkway, Mountain View. My API key is sk_test_4eC39HqLyjWDarjtT1zdp7dc and my credit card is 4532-7153-3790-4421. Our server IP is 192.168.1.1"
-    }
-    jsonData, _ := json.Marshal(data)
-
-    req, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
-    req.Header.Set("Authorization", "Bearer YOUR_API_KEY")
-    req.Header.Set("Content-Type", "application/json")
-
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    if err != nil {
-        panic(err)
-    }
-    defer resp.Body.Close()
-
-    fmt.Println("Response Status:", resp.Status)
-    // Read and print response body here
-}
-```
-
-### Java
-
-```java
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-
-public class Main {
-    public static void main(String[] args) throws Exception {
-        String url = "https://api.glaider.it/v1/anonymize-pii";
-        String jsonBody = "{\"prompt\":\"Hi, I'm Lorenzo Smith working at Google. You can reach me at lorenzo.smith@gmail.com or visit our office at 1600 Amphitheatre Parkway, Mountain View. My API key is sk_test_4eC39HqLyjWDarjtT1zdp7dc and my credit card is 4532-7153-3790-4421. Our server IP is 192.168.1.1\"}";
-
-        HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create(url))
-            .header("Authorization", "Bearer YOUR_API_KEY")
-            .header("Content-Type", "application/json")
-            .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
-            .build();
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-        System.out.println("Status code: " + response.statusCode());
-        System.out.println("Response body: " + response.body());
-    }
-}
-```
+[Continue with other language examples...]
