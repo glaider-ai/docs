@@ -10,10 +10,6 @@ This document provides a comprehensive overview of the API endpoints available i
 ## Table of Contents
 
 - [Authentication](#authentication)
-- [Endpoints](#endpoints)
-  - [Detect Prompt Injection](#detect-prompt-injection)
-  - [Get Analysis Result](#get-analysis-result)
-  - [Anonymize PII](#anonymize-pii)
 - [Attack Detection Mechanism](#attack-detection-mechanism)
   - [Strictness Levels](#strictness-levels)
   - [Caching Strategy](#caching-strategy)
@@ -39,40 +35,7 @@ Replace `<your_api_key>` with your actual API key.
 
 ---
 
-## Endpoints
-
-### Detect Prompt Injection
-
-Glaider helps identify and prevent potential prompt injection attacks that could manipulate AI model behavior. This endpoint provides options for asynchronous processing, metadata inclusion, tagging, session tracking, message saving, strictness levels, and notifications to enhance functionality and integration with your applications.
-
-- **URL**: `https://api.glaider.it/v1/detect-prompt-injection`
-- **Method**: `POST`
-- **Description**: Detects potential prompt injection attacks in the provided prompt. Supports zero latency mode, varying strictness levels, and caching to optimize performance.
-- **Headers**:
-
-  | Header        | Value                 |
-  |---------------|-----------------------|
-  | Authorization | Bearer `YOUR_API_KEY` |
-  | Content-Type  | application/json      |
-
-#### Request Body Parameters
-
-| Parameter       | Type      | Required | Description                                                                                                                                             |
-|-----------------|-----------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `prompt`        | `string`  | **Yes**  | The input text to be analyzed for potential prompt injection.                                                                                           |
-| `zero_latency`  | `boolean` | No       | If `true`, the request returns immediately, and processing is done asynchronously. Defaults to `false`.                                                  |
-| `tag`           | `string`  | No       | A custom tag or identifier for the request, useful for tracking and categorization. Defaults to `"unknown"`.                                             |
-| `chat_id`       | `string`  | No       | An identifier for the chat session or conversation. Useful for associating the analysis with a specific session.                                         |
-| `save_message`  | `boolean` | No       | If `true`, the prompt message will be saved in the system for future reference or auditing. Defaults to `false`.                                         |
-| `notifications` | `boolean` | No       | If `true`, notifications will be sent based on the analysis result. Useful for alerting admins or triggering workflows. Defaults to `false`.             |
-| `strictness`    | `integer` | No       | Controls the strictness level of detection. Accepts `1`, `2`, or `3`. See [Strictness Levels](#strictness-levels) for details. Defaults to `None`.       |
-| `metadata`      | `object`  | No       | A JSON object containing additional data or context for the request. Defaults to `{}`.                                                                   |
-
-**Notes:**
-
-- All boolean parameters default to `false` if omitted.
-- The `strictness` parameter defaults to `None` if not provided, which uses the default detection behavior.
-- The `metadata` parameter defaults to an empty object `{}` if not provided.
+## Attack Detection Mechanism
 
 #### Strictness Levels
 
