@@ -3,7 +3,7 @@ title: "Anonymize PII"
 hideTitle: false
 ---
 
-Glaider allows you to anonymize personally identifiable information (PII) in text data before processing it with AI models or storing it. The service automatically detects and anonymizes sensitive information like personal names, locations, organizations, and various types of credentials or identifiers.
+Glaider allows you to anonymize personally identifiable information (PII) in text data before processing it with AI models or storing it. The service automatically detects and anonymizes sensitive information such as personal names, locations, organizations, email addresses, IP addresses, access tokens, API keys, credit card numbers, and more.
 
 ## Endpoint
 
@@ -24,11 +24,11 @@ Replace `YOUR_API_KEY` with your actual API key.
 
 ## Request Body Parameters
 
-| Parameter | Type     | Required | Description                |
-|-----------|----------|----------|----------------------------|
-| `prompt`  | `string` | **Yes**  | The input text to anonymize|
+| Parameter | Type     | Required | Description                 |
+|-----------|----------|----------|-----------------------------|
+| `prompt`  | `string` | **Yes**  | The input text to anonymize |
 
-### Example Request
+## Example Request
 
 ```json
 {
@@ -48,14 +48,14 @@ Replace `YOUR_API_KEY` with your actual API key.
 {
   "anonymized_text": "Hi, I'm [PER_0] working at [ORG_0]. You can reach me at [Email Address_0] or visit our office at 1600 [LOC_0], [LOC_1]. My API key is [Access Token_0] and my credit card is [Credit Card Number_0]. Our server IP is [IPv4 Address_0]",
   "entities": {
-    "[LOC_0]": "Amphitheatre Parkway",
     "[PER_0]": "Lorenzo Smith",
-    "[LOC_1]": "Mountain View",
     "[ORG_0]": "Google",
     "[Email Address_0]": "lorenzo.smith@gmail.com",
-    "[IPv4 Address_0]": "192.168.1.1",
+    "[LOC_0]": "Amphitheatre Parkway",
+    "[LOC_1]": "Mountain View",
+    "[Access Token_0]": "sk_test_4eC39HqLyjWDarja4fqee2d23dtT1zdp7dc",
     "[Credit Card Number_0]": "4532-7153-3790-4421",
-    "[Access Token_0]": "sk_test_4eC39HqLyjWDarja4fqee2d23dtT1zdp7dc"
+    "[IPv4 Address_0]": "192.168.1.1"
   }
 }
 ```
@@ -100,22 +100,21 @@ Replace `YOUR_API_KEY` with your actual API key.
 
 ## Response Fields Description
 
-- **`anonymized_text`** (`string`): The input text with all detected sensitive information replaced with anonymized tokens
-- **`entities`** (`object`): A mapping of anonymized tokens to their original values
+- **`anonymized_text`** (`string`): The input text with all detected sensitive information replaced with anonymized tokens.
+- **`entities`** (`object`): A mapping of anonymized tokens to their original values.
 
 ## Supported Entity Types
 
 The API automatically detects and anonymizes the following types of sensitive information:
 
-- Personal names (`[PER_n]`)
-- Location names (`[LOC_n]`)
-- Organization names (`[ORG_n]`)
-- Email addresses (`[Email Address_n]`)
-- Private keys (`[Private Key_n]`)
-- IP addresses (`[IPv4 Address_n]`)
-- Access tokens (`[Access Token_n]`)
-- API keys (`[API Key_n]`)
-- Credit card numbers (`[Credit Card Number_n]`)
+- Personal names (e.g., `[PER_n]`)
+- Location names (e.g., `[LOC_n]`)
+- Organization names (e.g., `[ORG_n]`)
+- Email addresses (e.g., `[Email Address_n]`)
+- IP addresses (e.g., `[IPv4 Address_n]`)
+- Access tokens (e.g., `[Access Token_n]`)
+- API keys (e.g., `[API Key_n]`)
+- Credit card numbers (e.g., `[Credit Card Number_n]`)
 
 ## Usage Examples
 
@@ -140,4 +139,22 @@ response = requests.post(url, json=data, headers=headers)
 print(response.json())
 ```
 
-[Continue with other language examples...]
+## Additional Information
+
+- **Rate Limiting**: The API enforces rate limits to ensure fair usage. If you exceed the rate limit, you will receive a `429 Too Many Requests` response. Please implement appropriate retry logic with exponential backoff in your applications.
+
+- **Error Handling**: Always check the response status code and handle errors appropriately in your application.
+
+- **Security**: Keep your API key secure. Do not expose it in client-side code, public repositories, or logs.
+
+- **Support**: For assistance or inquiries, contact our support team at [info@glaider.it](mailto:info@glaider.it).
+
+---
+
+**Example Scenario**:
+
+Suppose you are processing user-submitted text and need to ensure that any personally identifiable information (PII) is anonymized before storing it or processing it further. You can use the `anonymize-pii` endpoint to detect and replace sensitive information with anonymized tokens.
+
+By sending the text to the API, you receive the anonymized version along with a mapping of the anonymized tokens to the original values. This allows you to safely work with the anonymized text while still having the ability to refer back to the original data if necessary, in a secure and controlled manner.
+
+---
