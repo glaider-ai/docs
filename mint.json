@@ -66,13 +66,6 @@
               ]
             }
           ]
-        },
-        {
-          "group": "Plugins",
-          "pages": [
-            "plugins/browser",
-            "plugins/vscode"
-          ]
         }
       ]
     },
