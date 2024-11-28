@@ -77,7 +77,8 @@
           "group": "Features",
           "pages": [
             "api-reference/features/anonymize-pii",
-            "api-reference/features/detect-attack"
+            "api-reference/features/detect-attack",
+            "api-reference/features/detect-indirect-attack"
           ]
         }
       ]
