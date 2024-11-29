@@ -11,7 +11,7 @@ Glaider identifies potential indirect prompt injection attacks that could manipu
 POST /v1/detect-indirect-attack
 ```
 
-**Note**: Replace the base URL (e.g., `http://195.242.13.11:8001`) with your actual server address.
+**Note**: Replace the base URL (e.g., `http://api.glaider.it`) with your actual server address.
 
 ## Authentication
 
@@ -108,7 +108,7 @@ The current implementation focuses on analyzing the uploaded document. Additiona
 ```python
 import requests
 
-BASE_URL = "http://195.242.13.11:8001/v1"
+BASE_URL = "http://api.glaider.it/v1"
 API_KEY = "YOUR_API_KEY"
 
 headers = {
@@ -135,7 +135,7 @@ if __name__ == "__main__":
 
 **Explanation:**
 
-- **Endpoint URL**: Adjusted to point to `http://195.242.13.11:8001/v1/detect-indirect-attack`.
+- **Endpoint URL**: Adjusted to point to `http://api.glaider.it/v1/detect-indirect-attack`.
 - **API Key**: Replace `"YOUR_API_KEY"` with your actual API key.
 - **Headers**: Only the `Authorization` header is set. Do not manually set the `Content-Type` header when uploading files.
 - **File Upload**: The file is sent in the `files` parameter using `multipart/form-data`.
