@@ -1,6 +1,9 @@
 ---
+
 title: "Detect Indirect Attack"
+
 hideTitle: false
+
 ---
 
 Glaider identifies potential indirect prompt injection attacks that could manipulate AI model behavior through secondary inputs like documents or third-party API data.
@@ -11,7 +14,7 @@ Glaider identifies potential indirect prompt injection attacks that could manipu
 POST /v1/detect-indirect-attack
 ```
 
-**Note**: Replace the base URL (e.g., `http://api.glaider.it`) with your actual server address.
+**Note**: Replace the base URL (e.g., `https://api.glaider.it`) with your actual server address.
 
 ## Authentication
 
@@ -22,20 +25,20 @@ The API requires authentication via an API key.
 
 ## Headers
 
-| Header          | Value                  |
-|-----------------|------------------------|
-| Authorization   | Bearer `YOUR_API_KEY`  |
-| Content-Type    | `multipart/form-data`  |
+| Header        | Value                 |
+|---------------|-----------------------|
+| Authorization | Bearer `YOUR_API_KEY` |
+| Content-Type  | `multipart/form-data` |
 
-**Note**: When uploading files, you should not manually set the `Content-Type` header; `requests` or your HTTP client library will handle it when using `multipart/form-data`.
+**Note**: When uploading files, you should not manually set the `Content-Type` header; your HTTP client library will handle it when using `multipart/form-data`.
 
 ## Request Parameters
 
 ### Form Data
 
-| Parameter      | Type      | Required | Description                                                                                                   |
-|----------------|-----------|----------|---------------------------------------------------------------------------------------------------------------|
-| file           | file      | **Yes**  | The document file to be analyzed for potential indirect prompt injection. Accepted formats: PDF, DOCX, TXT, etc. |
+| Parameter | Type | Required | Description                                                                                     |
+|-----------|------|----------|-------------------------------------------------------------------------------------------------|
+| file      | file | **Yes**  | The document file to be analyzed for potential indirect prompt injection. Accepted formats: PDF, DOCX, TXT, etc. |
 
 **Note**: The file should be uploaded using a `multipart/form-data` form submission.
 
@@ -51,37 +54,15 @@ The current implementation focuses on analyzing the uploaded document. Additiona
 - **Content-Type**: `application/json`
 - **Body**:
 
-```json
-{
-  "summary": {
-    "total_chunks": 5,
-    "safe_chunks": 4,
-    "unsafe_chunks": 1,
-    "results": [
-      {
-        "chunk_index": 0,
-        "is_prompt_injection": false,
-        "analysis_id": "abcd1234"
-      },
-      {
-        "chunk_index": 1,
-        "is_prompt_injection": true,
-        "analysis_id": "efgh5678"
-      },
-      // Additional chunk results...
-    ],
-    "complete_text": "Full extracted text from the document..."
-  },
-  "unsafe_chunks": [
-    {
-      "chunk_index": 1,
-      "text": "Text of the unsafe chunk...",
-      "analysis_id": "efgh5678"
-    }
-    // Additional unsafe chunks...
-  ]
-}
-```
+  ```json
+  {
+    "contains_attack": true,
+    "attack_percentage": 0.2,
+    "attack_content": "Text of the unsafe chunks concatenated...",
+    "total_tokens": 12345,
+    "estimated_price": 0.1235
+  }
+  ```
 
 ### Error Responses
 
@@ -101,6 +82,14 @@ The current implementation focuses on analyzing the uploaded document. Additiona
 }
 ```
 
+## Response Fields Description
+
+- **contains_attack** (`boolean`): Indicates whether any potential indirect prompt injection attacks were detected in the document.
+- **attack_percentage** (`number`): The proportion of chunks identified as containing potential attacks, ranging from `0` to `1`.
+- **attack_content** (`string`): Concatenated text of all chunks identified as containing attacks.
+- **total_tokens** (`integer`): Total number of tokens in the extracted text from the document.
+- **estimated_price** (`number`): Estimated cost of processing the document, based on the total number of tokens (assumed rate of €10 per million tokens).
+
 ## Example Usage
 
 ### Python Example
@@ -108,7 +97,7 @@ The current implementation focuses on analyzing the uploaded document. Additiona
 ```python
 import requests
 
-BASE_URL = "http://api.glaider.it/v1"
+BASE_URL = "https://api.glaider.it/v1"
 API_KEY = "YOUR_API_KEY"
 
 headers = {
@@ -130,12 +119,12 @@ def test_detect_indirect_attack():
         print("Response JSON:", response.json())
 
 if __name__ == "__main__":
-    test_detect_indirect_attack() 
+    test_detect_indirect_attack()
 ```
 
 **Explanation:**
 
-- **Endpoint URL**: Adjusted to point to `http://api.glaider.it/v1/detect-indirect-attack`.
+- **Endpoint URL**: Points to `https://api.glaider.it/v1/detect-indirect-attack`.
 - **API Key**: Replace `"YOUR_API_KEY"` with your actual API key.
 - **Headers**: Only the `Authorization` header is set. Do not manually set the `Content-Type` header when uploading files.
 - **File Upload**: The file is sent in the `files` parameter using `multipart/form-data`.
@@ -146,67 +135,77 @@ if __name__ == "__main__":
 ```json
 Response Status Code: 200
 Response JSON: {
-  "summary": {
-    "total_chunks": 3,
-    "safe_chunks": 2,
-    "unsafe_chunks": 1,
-    "results": [
-      {
-        "chunk_index": 0,
-        "is_prompt_injection": false,
-        "analysis_id": "a1b2c3d4"
-      },
-      {
-        "chunk_index": 1,
-        "is_prompt_injection": true,
-        "analysis_id": "e5f6g7h8"
-      },
-      {
-        "chunk_index": 2,
-        "is_prompt_injection": false,
-        "analysis_id": "i9j0k1l2"
-      }
-    ],
-    "complete_text": "Full extracted text from the document..."
-  },
-  "unsafe_chunks": [
-    {
-      "chunk_index": 1,
-      "text": "Text of the unsafe chunk...",
-      "analysis_id": "e5f6g7h8"
-    }
-  ]
+  "contains_attack": true,
+  "attack_percentage": 0.3333333333333333,
+  "attack_content": "Text of the unsafe chunks concatenated from the document...",
+  "total_tokens": 15000,
+  "estimated_price": 0.15
 }
 ```
-
-## Response Fields Description
-
-- **summary** (`object`): Contains the summary of the analysis.
-  - **total_chunks** (`integer`): Total number of text chunks analyzed.
-  - **safe_chunks** (`integer`): Number of chunks classified as safe.
-  - **unsafe_chunks** (`integer`): Number of chunks classified as unsafe (potential indirect attacks).
-  - **results** (`array`): List of results for each chunk.
-    - **chunk_index** (`integer`): Index of the chunk in the document.
-    - **is_prompt_injection** (`boolean`): `true` if the chunk is classified as an indirect attack.
-    - **analysis_id** (`string`): Unique identifier for the analysis of this chunk.
-  - **complete_text** (`string`): The full text extracted from the uploaded document.
-- **unsafe_chunks** (`array`): Details of the chunks identified as unsafe.
-  - **chunk_index** (`integer`): Index of the unsafe chunk.
-  - **text** (`string`): Text content of the unsafe chunk.
-  - **analysis_id** (`string`): Unique identifier for the analysis of this chunk.
-- **error** (`string`): Error message in case of an error.
 
 ## Additional Information
 
 - **File Support**: The service supports various document formats like PDF, DOCX, TXT, etc.
 - **Chunking Logic**: The text extracted from the document is split into chunks of up to 480 characters each for analysis.
 - **Analysis Process**: Each chunk is analyzed for prompt injection using the existing prompt injection detection mechanisms.
+- **Cost Estimation**: The `estimated_price` is calculated based on the total number of tokens processed, assuming a rate of €10 per million tokens.
 - **Asynchronous Processing**: The current implementation processes all chunks synchronously and returns the aggregated result.
 
 ## Usage Notes
 
 - **Authentication**: Make sure to include your API key in the `Authorization` header.
 - **File Upload**: Use `multipart/form-data` to upload the file.
-- **Response Handling**: Check the `unsafe_chunks` and `summary` in the response to understand the analysis outcome.
+- **Response Handling**: Check the `contains_attack`, `attack_percentage`, and `attack_content` in the response to understand the analysis outcome.
 - **Error Handling**: If an error occurs, the response will contain an `error` field with the error message.
 - **Performance**: The total execution time may vary depending on the size of the document and the number of chunks.
+- **Cost Awareness**: Be mindful of the `estimated_price` when processing large documents.
+
+## Response Interpretation
+
+- A `contains_attack` value of `true` indicates that at least one chunk of the document was identified as containing a potential indirect prompt injection attack.
+- The `attack_percentage` helps gauge how much of the document is affected.
+  - For example, an `attack_percentage` of `0.2` means that 20% of the chunks are potentially unsafe.
+- The `attack_content` provides the concatenated text of all unsafe chunks, which can be reviewed for further analysis.
+- The `total_tokens` and `estimated_price` provide insights into the size of the document and the associated processing cost.
+
+## Example Workflow
+
+1. **Prepare the Request**:
+   - Ensure you have a valid API key.
+   - Choose the document you want to analyze.
+
+2. **Send the Request**:
+   - Use the provided Python example or your preferred HTTP client to send a `POST` request to the `/v1/detect-indirect-attack` endpoint.
+   - Upload the file using `multipart/form-data`.
+
+3. **Process the Response**:
+   - On success, check the `contains_attack` field.
+   - If `contains_attack` is `true`, review the `attack_content` to understand the potential threats.
+   - Use `attack_percentage` to assess the severity.
+
+4. **Take Action**:
+   - If attacks are detected, consider sanitizing the document or investigating further.
+   - Use the `total_tokens` and `estimated_price` to manage costs for large-scale analysis.
+
+## FAQs
+
+- **Q**: What types of files are supported?
+  - **A**: The service supports various document formats, including PDF, DOCX, TXT, and more.
+
+- **Q**: How is the `estimated_price` calculated?
+  - **A**: It's based on the total number of tokens in the extracted text, assuming a rate of €10 per million tokens.
+
+- **Q**: Is the analysis real-time?
+  - **A**: Yes, the analysis is performed synchronously, and the response is returned after processing.
+
+- **Q**: Can I adjust the strictness or other parameters?
+  - **A**: Currently, parameters like `strictness` are set within the server code and are not exposed as request parameters.
+
+- **Q**: How secure is my uploaded document?
+  - **A**: Uploaded documents are processed and then deleted from temporary storage. Ensure you comply with your organization's data handling policies.
+
+## Contact Support
+
+If you encounter issues or have questions, please contact our support team at [info@glaider.it](mailto:info@glaider.it).
+
+---
